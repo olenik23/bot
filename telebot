@@ -9,7 +9,7 @@ def filter_echo(message):
 @bot.message_handler(commands=['start'])
 def start_message(message):
     data[message.chat.id]  = {'state':'start'}
-    markup = telebot.types.InlineKeyboardButton()
+    markup = telebot.types.InlineKeyboardMarkup()
     button_echo = telebot.types.InlineKeyboardButton('Эхо-бот',callback_data='echo')
     markup.add(button_echo)
     bot.send_message(message.chat.id,message.from_user.first_name + ' нажми на кнопку',reply_markup=markup)
@@ -19,7 +19,7 @@ def start_message(message):
 def commands(call):
     bot.answer_callback_query(call.id)
     if call.data == 'echo':
-        bot.send_message(call.message.chat.id, 'Наапиши чтото')
+        bot.send_message(call.message.chat.id, 'Напиши что-то')
         data[call.message.chat.id]['state'] = 'echo'
 
 
@@ -28,4 +28,4 @@ def echo_message(message):
     answer = message.text
     bot.reply_to(message,answer)
 
-    bot.pilling(none_stope=True)
+bot.polling(none_stop=True)
